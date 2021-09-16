@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios'
 import logo from './logo.svg';
+import WeatherBlock from './weatherBlock.js'
 import './App.css';
 
 const App = () => {
@@ -10,22 +11,26 @@ const App = () => {
     axios.get('http://localhost:3001/weather')
       .then(res => {
         setwData(res.data)
-        // for (const obj of res.data) {
-        //   setData(() => [...data, obj]
-        //   )
-          // console.log(obj)
-        // }
       })
   }, [])
+
+  const compileData = (arr) => {
+    const formatted = arr.map(day => {
+      return <WeatherBlock
+        date={day.date}
+        info={day.info}
+        />
+    })
+    return formatted
+  }
 
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         {wData.length
-        // ? Object.keys(wData[0][0])
-        ? `${wData[0].info.weather[0].description}`
-        : 'hi'}
+        ? compileData(wData)
+        : 'loading'}
         <p>
           Edit <code>src/App.js</code> and save to reload.sdfbsdfg
         </p>
