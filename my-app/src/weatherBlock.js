@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from 'react';
-
-const WeatherBlock = props => {
+const WeatherBlock = ({ date, info }) => {
   return (
     <div>
-      <h2>{props.date}</h2>
-      <h4>{props.info.weather[0].main}</h4>
-      <h3>{props.info.main.temp}</h3>
+      <h2>{date}</h2>
+      <h4>{info.weather[0].main}</h4>
+      <h3>{info.main.temp}</h3>
     </div>
   )
 }

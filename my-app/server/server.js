@@ -10,13 +10,20 @@ app.use((req, res, next) => {
 });
 
 app.get('/weather', (req, res) => {
-  const url = `https://api.openweathermap.org/data/2.5/forecast?q=san francisco&appid=${key}&units=imperial`;
+  const loc = req.query.loc
+  let url = `https://api.openweathermap.org/data/2.5/forecast?zip=${loc},us&units=imperial&appid=${key}`;
+  if (isNaN(loc)) {
+    url = `https://api.openweathermap.org/data/2.5/forecast?q=${loc}&units=imperial&appid=${key}`
+  }
   axios.get(url)
     .then(response => {
       const data = response.data.list
       const final = [];
       for (const info of data) {
-        if (info.dt_txt.slice(11, 13) === '12') {
+        // const convDate = new Date(info.dt_txt)
+        // const pstDate = new Date(info.dt_txt).toString()
+        // console.log( pstDate)
+        if (info.dt_txt.slice(11, 13) === '21') {
           const day = info.dt_txt.slice(0, 10)
           final.push({
             date : day,
@@ -27,7 +34,7 @@ app.get('/weather', (req, res) => {
       res.send(final)
     })
     .catch(err => {
-      console.log(err)
+      res.send([])
     })
 })
 
