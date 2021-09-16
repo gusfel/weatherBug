@@ -1,14 +1,13 @@
-const WeatherBlock = ({ date, info }) => {
-  return (
-    <div>
-      <h2>{date}</h2>
-      <h4>{info.weather[0].main}</h4>
-      <h3>{info.main.temp}</h3>
-    </div>
-  )
-}
+const WeatherBlock = ({ date, info }) => (
+  <div>
+    <h2>{date}</h2>
+    <h4>{info.weather[0].main}</h4>
+    <h3>{info.main.temp}</h3>
+    <img alt="icon" src={`http://openweathermap.org/img/wn/${info.weather[0].icon}@2x.png`} />
+  </div>
+);
 
-export default WeatherBlock
+export default WeatherBlock;
 
 // {
 //   date: '2021-09-16',

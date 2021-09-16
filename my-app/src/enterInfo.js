@@ -1,12 +1,12 @@
-import React, { useState} from 'react';
+import React, { useState } from 'react';
 
-const EnterInfo = props => {
-  const [loc, setLoc] = useState("");
+const EnterInfo = ({ getData }) => {
+  const [loc, setLoc] = useState('');
 
   const handleSubmit = (evt) => {
-      evt.preventDefault();
-      props.getData(loc)
-  }
+    evt.preventDefault();
+    getData(loc);
+  };
 
   return (
     <form onSubmit={handleSubmit}>
@@ -15,12 +15,12 @@ const EnterInfo = props => {
         <input
           type="text"
           value={loc}
-          onChange={e => setLoc(e.target.value)}
+          onChange={(e) => setLoc(e.target.value)}
         />
       </label>
       <input type="submit" value="Submit" />
     </form>
   );
-}
+};
 
 export default EnterInfo;
