@@ -10,5 +10,5 @@ CREATE TABLE entries (
   id serial PRIMARY KEY,
   entry VARCHAR (100) NOT NULL,
   found BOOLEAN NOT NULL,
-  created TIMESTAMP NOT NULL
+  created VARCHAR (100) NOT NULL
 );

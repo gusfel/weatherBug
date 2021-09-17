@@ -7,5 +7,5 @@ const client = new Client({
   password: 'postgres',
   port: 5432,
 });
-
+client.connect();
 module.exports = client;
