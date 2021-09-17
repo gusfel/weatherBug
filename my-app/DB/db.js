@@ -5,8 +5,7 @@ const client = new Client({
   host: 'localhost',
   database: 'weather',
   password: 'postgres',
-  port: 3211,
+  port: 5432,
 });
-client.connect();
 
 module.exports = client;

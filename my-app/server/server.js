@@ -1,5 +1,6 @@
 const express = require('express');
 const axios = require('axios');
+const controller = require('../DB/controller.js');
 
 const app = express();
 const port = 3001;
@@ -12,33 +13,33 @@ app.use((req, res, next) => {
 
 app.get('/weather', (req, res) => {
   const { loc } = req.query;
+  const today = new Date().toISOString();
   let url = `https://api.openweathermap.org/data/2.5/forecast?zip=${loc},us&units=imperial&appid=${key}`;
   if (isNaN(loc)) {
     url = `https://api.openweathermap.org/data/2.5/forecast?q=${loc}&units=imperial&appid=${key}`;
   }
   axios.get(url)
     .then((response) => {
-      const data = response.data.list;
-      // const final = [];
-      // for (const info of data) {
-      //   // const convDate = new Date(info.dt_txt)
-      //   // const pstDate = new Date(info.dt_txt).toString()
-      //   if (info.dt_txt.slice(11, 13) === '21') {
-      //     const day = info.dt_txt.slice(0, 10);
-      //     final.push({
-      //       date: day,
-      //       info,
-      //     });
-      //   }
-      // }
-      const newFinal = data.filter((info) => info.dt_txt.slice(11, 13) === '21').map((info) => {
-        const day = info.dt_txt.slice(0, 10);
-        return {
-          date: day,
-          info,
-        };
+      const entryObj = {
+        entry: loc,
+        found: true,
+        created: today,
+      };
+      controller.addEntry(entryObj, (err, succ) => {
+        if (err) {
+          throw err;
+        }
+        const data = response.data.list;
+        const newFinal = data.filter((info) => info.dt_txt.slice(11, 13) === '21').map((info) => {
+          const day = info.dt_txt.slice(0, 10);
+          return {
+            date: day,
+            info,
+          };
+        });
+        console.log('entered');
+        res.send(newFinal);
       });
-      res.send(newFinal);
     })
     .catch(() => {
       res.send('err');
