@@ -31,9 +31,7 @@ app.get('/weather', (req, res) => {
       //     });
       //   }
       // }
-      const newFinal = data.filter((info) => {
-        return info.dt_txt.slice(11, 13) === '21'
-      }).map((info) => {
+      const newFinal = data.filter((info) => info.dt_txt.slice(11, 13) === '21').map((info) => {
         const day = info.dt_txt.slice(0, 10);
         return {
           date: day,
