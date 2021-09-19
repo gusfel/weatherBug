@@ -16,7 +16,7 @@ app.get('/weather', (req, res) => {
   const today = new Date();
   const entryObj = {
     entry: loc,
-    created: today.getTime(),
+    created: today,
   };
   let url = `https://api.openweathermap.org/data/2.5/forecast?zip=${loc},us&units=imperial&appid=${key}`;
   if (isNaN(loc)) {
@@ -42,7 +42,6 @@ app.get('/weather', (req, res) => {
       });
     })
     .catch(() => {
-      // send these to database too
       entryObj.found = false;
       controller.addEntry(entryObj, (err, data) => {
         if (err) {
@@ -59,9 +58,9 @@ app.get('/recent', (req, res) => {
     if (err) {
       console.log(err);
     } else {
-      console.log(data);
+      res.send(data.rows);
     }
-  })
+  });
 });
 
 app.listen(port, () => {

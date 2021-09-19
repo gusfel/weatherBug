@@ -11,6 +11,10 @@ const App = () => {
   const [recent, setRecent] = useState([]);
 
   useEffect(() => {
+    axios.get('http://localhost:3001/recent')
+      .then(res => {
+        setRecent(res.data)
+      })
   }, []);
 
   const compileData = (arr) => {
