@@ -13,12 +13,11 @@ module.exports = {
       });
   },
   getEntries: (callback) => {
-    const query = 'SELECT * FROM entries SORT BY created desc limit 10;';
+    const query = 'SELECT * FROM entries ORDER BY created desc limit 10;';
     DB
-      // .connect()
       .query(query)
       .then((res) => callback(null, res))
-      .catch(() => callback(false));
+      .catch((err) => callback(err));
   },
 };
 

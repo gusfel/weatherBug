@@ -14,17 +14,17 @@ app.use((req, res, next) => {
 app.get('/weather', (req, res) => {
   const { loc } = req.query;
   const today = new Date();
+  const entryObj = {
+    entry: loc,
+    created: today.getTime(),
+  };
   let url = `https://api.openweathermap.org/data/2.5/forecast?zip=${loc},us&units=imperial&appid=${key}`;
   if (isNaN(loc)) {
     url = `https://api.openweathermap.org/data/2.5/forecast?q=${loc}&units=imperial&appid=${key}`;
   }
   axios.get(url)
     .then((response) => {
-      const entryObj = {
-        entry: loc,
-        found: true,
-        created: today.getTime(),
-      };
+      entryObj.found = true;
       controller.addEntry(entryObj, (err, succ) => {
         if (err) {
           throw err;
@@ -43,8 +43,25 @@ app.get('/weather', (req, res) => {
     })
     .catch(() => {
       // send these to database too
-      res.send('err');
+      entryObj.found = false;
+      controller.addEntry(entryObj, (err, data) => {
+        if (err) {
+          throw err;
+        } else {
+          res.send('err');
+        }
+      });
     });
+});
+
+app.get('/recent', (req, res) => {
+  controller.getEntries((err, data) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log(data);
+    }
+  })
 });
 
 app.listen(port, () => {

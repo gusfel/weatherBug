@@ -8,6 +8,7 @@ import './App.css';
 const App = () => {
   const [wData, setwData] = useState([]);
   const [error, setError] = useState(false);
+  const [recent, setRecent] = useState([]);
 
   useEffect(() => {
   }, []);
