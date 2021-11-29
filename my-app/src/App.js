@@ -4,7 +4,7 @@ import logo from './logo.svg';
 import WeatherBlock from './weatherBlock';
 import EnterInfo from './enterInfo';
 import './App.css';
-
+// test test
 const App = () => {
   const [wData, setwData] = useState([]);
   const [error, setError] = useState(false);
